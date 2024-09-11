@@ -4,12 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head />
-      <body
-        className="h-full"
-        style={{
-          background: "linear-gradient(90deg,#f4f4f4 48px,white 48px)",
-        }}
-      >
+      <body className="h-full">
         <Main />
         <NextScript />
       </body>
