@@ -2,7 +2,7 @@
   "name": "sp-workbench",
   "author": "Allan Hvam",
   "private": false,
-  "version": "1.2.1",
+  "version": "1.2.2",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

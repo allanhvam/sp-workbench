@@ -83,64 +83,66 @@ export function SharePoint(props: Props) {
               displayMode: editMode ? DisplayMode.Edit : DisplayMode.Read,
             }}
           >
-            {/* Office 365 Bar */}
-            <div className="h-12 bg-blue-600 flex items-center justify-between print:hidden">
-              <IconButton
-                className="hover:bg-blue-700"
-                icon={
-                  <GridDotsFilled className="text-white h-[18px] w-[18px]" />
-                }
-                onClick={() => setLocation("/")}
-              />
-              <SearchBox placeholder={`Search this site`} className="w-96" />
-              <div className="px-2">
+            <div className="flex flex-col min-h-screen">
+              {/* Office 365 Bar */}
+              <div className="h-12 bg-blue-600 flex items-center justify-between print:hidden">
                 <IconButton
                   className="hover:bg-blue-700"
                   icon={
-                    <SettingsRegular className="text-white h-[18px] w-[18px]" />
+                    <GridDotsFilled className="text-white h-[18px] w-[18px]" />
                   }
-                  onClick={() => setLocation("/_layouts/viewlsts.aspx")}
+                  onClick={() => setLocation("/")}
                 />
-              </div>
-            </div>
-
-            <div className="flex flex-row">
-              <AppBar />
-              <div className="w-[calc(100vw-48px)]">
-                {/* SharePoint Header */}
-                <div className="h-20 flex items-center print:hidden">
-                  <Title />
+                <SearchBox placeholder={`Search this site`} className="w-96" />
+                <div className="px-2">
+                  <IconButton
+                    className="hover:bg-blue-700"
+                    icon={
+                      <SettingsRegular className="text-white h-[18px] w-[18px]" />
+                    }
+                    onClick={() => setLocation("/_layouts/viewlsts.aspx")}
+                  />
                 </div>
+              </div>
 
-                {/* NOTE: use wouter to void conflicts with react-router-dom */}
-                <Switch>
-                  <Route path="/_layouts/viewlsts.aspx">
-                    <ViewLists />
-                  </Route>
+              <div className="flex flex-row flex-grow">
+                <AppBar />
+                <div className="w-[calc(100vw-48px)]">
+                  {/* SharePoint Header */}
+                  <div className="h-20 flex items-center print:hidden">
+                    <Title />
+                  </div>
 
-                  <Route path="/_layouts/settings.aspx">
-                    Site Settings
-                  </Route>
+                  {/* NOTE: use wouter to void conflicts with react-router-dom */}
+                  <Switch>
+                    <Route path="/_layouts/viewlsts.aspx">
+                      <ViewLists />
+                    </Route>
 
-                  <Route path="/_layouts/AdminRecycleBin.aspx">
-                    Recycle Bin
-                  </Route>
+                    <Route path="/_layouts/settings.aspx">
+                      Site Settings
+                    </Route>
 
-                  <Route>
-                    <ErrorBoundary resetKeys={["page"]}>
-                      <SitePage editMode={editMode} setEditMode={setEditMode}>
-                        {typeof children === "function"
-                          ? children({
+                    <Route path="/_layouts/AdminRecycleBin.aspx">
+                      Recycle Bin
+                    </Route>
+
+                    <Route>
+                      <ErrorBoundary resetKeys={["page"]}>
+                        <SitePage editMode={editMode} setEditMode={setEditMode}>
+                          {typeof children === "function"
+                            ? children({
                               location,
                               displayMode: editMode
                                 ? DisplayMode.Edit
                                 : DisplayMode.Read,
                             })
-                          : children}
-                      </SitePage>
-                    </ErrorBoundary>
-                  </Route>
-                </Switch>
+                            : children}
+                        </SitePage>
+                      </ErrorBoundary>
+                    </Route>
+                  </Switch>
+                </div>
               </div>
             </div>
           </WorkbenchContext.Provider>
