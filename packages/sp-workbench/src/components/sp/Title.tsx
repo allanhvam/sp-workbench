@@ -4,10 +4,12 @@ import { useWorkbenchQuery } from "../../hooks/useWorkbenchQuery";
 export function Title() {
   const { sp } = useWorkbench();
 
-  const { data: web } = useWorkbenchQuery({
-    queryKey: ["webInfo"],
-    queryFn: () => sp?.web(),
-  });
+  const { data: web } = useWorkbenchQuery(
+    {
+      queryKey: [sp.web.toUrl(), "webInfo"],
+      queryFn: () => sp?.web(),
+    },
+  );
 
   return (
     <a
