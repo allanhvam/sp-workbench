@@ -13,7 +13,7 @@
     "@typescript-eslint/parser": "^5.59.11",
     "@typescript-eslint/typescript-estree": "^5.59.11",
     "eslint": "^7.32.0",
-    "turbo": "^1.10.15"
+    "turbo": "^2.1.2"
   },
   "name": "@sp-workbench/monorepo",
   "engines": {

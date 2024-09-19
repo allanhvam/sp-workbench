@@ -22,6 +22,7 @@
     "lint": "npx eslint ."
   },
   "dependencies": {
+    "@azure/msal-browser": "^3.23.0",
     "@fluentui/react-components": "^9.44.1",
     "@fluentui/react-hooks": "^8.8.1",
     "@pnp/sp": "^4.0.0",

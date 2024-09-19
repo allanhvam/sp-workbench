@@ -1,17 +1,29 @@
 import { ToolbarButton } from "@fluentui/react-components";
 import clsx from "clsx";
-import { Dispatch, ReactNode, SetStateAction } from "react";
+import { ReactNode, useMemo } from "react";
 import "@pnp/sp/webs";
 import { BookOpenRegular, EditRegular } from "@fluentui/react-icons";
+import { useWorkbench } from "../../hooks/useWorkbench";
+import { DisplayMode } from "../../types/DisplayMode";
+import { useLocation } from "wouter";
 
 type Props = {
-  children: ReactNode;
-  editMode: boolean;
-  setEditMode: Dispatch<SetStateAction<boolean>>;
+  children:
+    | ReactNode
+    | ((workbench: {
+        location: string;
+        displayMode: DisplayMode;
+      }) => ReactNode);
 };
 
 export function SitePage(props: Props) {
-  const { editMode, setEditMode } = props;
+  const { children } = props;
+  const { displayMode, setDisplayMode } = useWorkbench();
+  const [location] = useLocation();
+
+  const editMode = useMemo(() => {
+    return displayMode === DisplayMode.Edit;
+  }, [displayMode]);
 
   return (
     <>
@@ -23,7 +35,11 @@ export function SitePage(props: Props) {
           })}
           icon={editMode ? <BookOpenRegular /> : <EditRegular />}
           onClick={() => {
-            setEditMode((em) => !em);
+            setDisplayMode((displayMode: DisplayMode) =>
+              displayMode === DisplayMode.Edit
+                ? DisplayMode.Read
+                : DisplayMode.Edit
+            );
           }}
         >
           {editMode ? "Publish" : "Edit"}
@@ -64,7 +80,14 @@ export function SitePage(props: Props) {
                       padding: "8px",
                     }}
                   >
-                    {props.children}
+                    {typeof children === "function"
+                      ? children({
+                          location,
+                          displayMode: editMode
+                            ? DisplayMode.Edit
+                            : DisplayMode.Read,
+                        })
+                      : children}
                   </div>
                 </div>
               </div>
